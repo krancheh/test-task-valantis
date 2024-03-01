@@ -3,6 +3,7 @@ import webpack from "webpack";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import type { Configuration as DevServerConfiguration } from "webpack-dev-server";
+import dotenv from "dotenv";
 
 interface IEnv {
     mode: "development" | "production";
@@ -10,6 +11,7 @@ interface IEnv {
 }
 
 export default (env: IEnv) => {
+    const $env = dotenv.config().parsed; // local .env
 
     const isDev = env.mode !== "production";
 
@@ -48,6 +50,9 @@ export default (env: IEnv) => {
                 filename: "css/[name]_[contenthash:8].css",
                 chunkFilename: "css/[name]_[contenthash:8].css",
             }),
+            new webpack.DefinePlugin({
+                "process.env": JSON.stringify($env),
+            }),
         ],
 
 
@@ -56,7 +61,7 @@ export default (env: IEnv) => {
         devServer: isDev && {
             port: env.port ?? 3000,
             open: true,
-            hot: true
+            hot: true,
         }
     }
 
