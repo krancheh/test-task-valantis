@@ -1,5 +1,12 @@
-node-modules
-dist
+/node_modules
+/coverage
 
+# prod
+/dist
+/build
+
+# misc
+/.idea
+.DS_Store
 .env
-/idea
+npm-debug.log
