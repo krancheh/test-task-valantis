@@ -1,3 +1,6 @@
+$main: #a42839;
+
+
 *,
 *::before,
 *::after {
@@ -10,6 +13,21 @@
 
 #root {
     min-height: calc(100vh - 70px);
+    background-color: #f8f8f8;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.hero {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    text-align: center;
 }
 
 .wrapper {
@@ -17,6 +35,25 @@
     max-width: 1300px;
     height: 100%;
 }
+
+
+.button {
+    padding: 8px 15px;
+    border: none;
+
+    display: inline-block;
+    opacity: .9;
+
+    background-color: $main;
+    color: #fff;
+
+    border-radius: 8px;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
 
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap')
