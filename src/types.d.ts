@@ -12,12 +12,12 @@ export type ResponseData<T> = {
     result: T;
 }
 
-export interface Pagination {
+export interface PaginationType {
     offset: number;
     limit: number;
 }
 
-export interface Item {
+export interface ItemType {
     id: string;
     brand?: string | null;
     price?: number | null;
