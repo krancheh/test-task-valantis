@@ -26,9 +26,26 @@ export default (env: IEnv) => {
         module: {
             rules: [
                 {
-                    test: /\.s[ac]ss$/i,
+                    test: /\.module\.s(a|c)ss$/,
                     use: [
-                        MiniCssExtractPlugin.loader,
+                        isDev ? "style-loader" : MiniCssExtractPlugin.loader,
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                modules: {
+                                    localIdentName: '[name]__[local]--[hash:base64:5]',
+                                },
+                                sourceMap: isDev,
+                            },
+                        },
+                        "sass-loader",
+                    ],
+                },
+                {
+                    test: /\.s[ac]ss$/i,
+                    exclude: /\.module.(s(a|c)ss)$/,
+                    use: [
+                        isDev ? "style-loader" : MiniCssExtractPlugin.loader,
                         'css-loader',
                         'sass-loader',
                     ],
@@ -41,7 +58,7 @@ export default (env: IEnv) => {
             ]
         },
         resolve: {
-            extensions: ['.tsx', '.ts', '.js']
+            extensions: ['.tsx', '.ts', '.js', ".scss"]
         },
         plugins: [
             new HtmlWebpackPlugin({ template: path.resolve(__dirname, "public", "index.html") }),
