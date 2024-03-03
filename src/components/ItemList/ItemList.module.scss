@@ -1,5 +1,6 @@
 .itemList {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(4, 240px);
+    justify-content: center;
     gap: 20px;
-    flex-wrap: wrap;
 }
