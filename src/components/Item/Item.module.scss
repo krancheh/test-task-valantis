@@ -5,14 +5,14 @@
     width: 240px;
 
     position: relative;
-    box-shadow: 0 1px 2px 0 #00000029;
+    box-shadow: index.$shadow;
 
     display: flex;
     flex-direction: column;
     gap: 10px;
 
     background-color: #fff;
-    border-radius: 5px;
+    border-radius: index.$b-radius;
 
 
     .id {
