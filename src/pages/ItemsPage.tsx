@@ -3,7 +3,7 @@ import ItemList from "../components/ItemList/ItemList"
 import useFetchItems from "../hooks/useFetchItems"
 import { URLSearchParamsInit, useSearchParams } from "react-router-dom"
 import $api from "../api"
-import { ResponseData } from "../types"
+import { FetchParams, ResponseData } from "../types"
 
 const ItemsPage = () => {
     const [searchParams, setSearchParams] = useSearchParams({});
@@ -11,8 +11,8 @@ const ItemsPage = () => {
     const [offset, setOffset] = useState(Number(searchParams.get("offset")) || 0);
     const [limit, setLimit] = useState(Number(searchParams.get("limit")) || 50);
 
-    const paginationModel = useMemo(() => ({ offset, limit }), [offset, limit])
-    const [items, isSuccess] = useFetchItems({ paginationModel });
+    const fetchParams: FetchParams = useMemo(() => ({ offset, limit }), [offset, limit])
+    const [items, isSuccess] = useFetchItems({ fetchParams });
 
 
     useEffect(() => {

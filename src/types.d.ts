@@ -12,9 +12,12 @@ export type ResponseData<T> = {
     result: T;
 }
 
-export interface PaginationType {
+export interface FetchParams {
     offset: number;
     limit: number;
+    filter?: {
+        [K in Field]: string | number;
+    }
 }
 
 export interface ItemType {
