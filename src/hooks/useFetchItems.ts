@@ -1,19 +1,25 @@
-import { RequestBody, ResponseData } from './../types.d';
+import { FilterParams, RequestBody, ResponseData } from './../types.d';
 import { useEffect, useRef, useState } from 'react'
 import { ItemType, FetchParams } from '../types';
 import $api from '../api';
 import getUniqueItems from '../utils/getUniqueItems';
 import { useAppDispatch, useAppSelector } from '../store';
-import { selectCachedItems, setCachedItems } from '../store/cacheSlice';
+import { selectCachedIds, selectCachedItems, setCachedIds, setCachedItems } from '../store/cacheSlice';
+
 
 interface IProps {
     fetchParams: FetchParams;
 }
 
-const useFetchItems = (props: IProps): [ItemType[], boolean, boolean] => {
+type UseFetchItems = [ItemType[], boolean, boolean];
+
+
+const useFetchItems = (props: IProps): UseFetchItems => {
     const { fetchParams } = props;
 
     const items = useAppSelector(state => selectCachedItems(state, fetchParams));
+    const cachedIdsByFilter = useAppSelector(state => selectCachedIds(state, fetchParams.filter));
+
     const [isFetching, setIsFetching] = useState(true);
     const [isSuccess, setIsSuccess] = useState(false);
 
@@ -33,19 +39,30 @@ const useFetchItems = (props: IProps): [ItemType[], boolean, boolean] => {
                     return;
                 }
 
-                const getIdsBody: RequestBody<FetchParams> = {
-                    action: "get_ids",
-                    params: fetchParams,
-                }
+                const { filter, offset, limit } = fetchParams;
 
-                const idsResponse = await $api.post<ResponseData<string[]>>("/", getIdsBody);
-                const ids = idsResponse.data.result;
+                // Если в параметрах есть filter, то action будет filter
+                const getIdsBody: RequestBody<FetchParams> | RequestBody<FilterParams> = filter
+                    ? { action: "filter", params: filter }
+                    : { action: "get_ids", params: { offset, limit } };
+
+                let ids: string[];
+
+                // Запрос айдишников 
+                if (filter && cachedIdsByFilter && cachedIdsByFilter.length > 0) {
+                    ids = cachedIdsByFilter.slice(offset * limit, offset * limit + limit - 1);
+                } else {
+                    const idsResponse = await $api.post<ResponseData<string[]>>("/", getIdsBody);
+                    dispatch(setCachedIds([filter, idsResponse.data.result]));
+                    ids = filter ? idsResponse.data.result.slice(offset * limit, offset * limit + limit - 1) : idsResponse.data.result;
+                }
 
                 const getItemsBody: RequestBody<{ ids: string[] }> = {
                     action: "get_items",
                     params: { ids },
                 }
 
+                // Запрос товаров
                 const itemsResponse = await $api.post<ResponseData<ItemType[]>>("/", getItemsBody);
 
                 // Фильтрация повторяющихся id товаров
@@ -53,6 +70,7 @@ const useFetchItems = (props: IProps): [ItemType[], boolean, boolean] => {
 
                 dispatch(setCachedItems([fetchParams, uniqueItems]));
                 setIsSuccess(true);
+
             } catch (error: any) {
                 setIsSuccess(false);
 
