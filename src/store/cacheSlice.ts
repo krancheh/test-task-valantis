@@ -13,15 +13,11 @@ type CachedIds = {
 interface IState {
     cachedItems: CachedItems;
     cachedIds: CachedIds;
-    brands: string[];
-    totalPages: number;
 }
 
 const initialState: IState = {
     cachedItems: {},
     cachedIds: {},
-    brands: [],
-    totalPages: 1,
 }
 
 
@@ -48,12 +44,6 @@ const cacheSlice = createSlice({
             } catch (e) {
                 console.log(e);
             }
-        }),
-        setBrands: creators.reducer<string[]>((state, action) => {
-            state.brands = action.payload;
-        }),
-        setPages: creators.reducer<number>((state, action) => {
-            state.totalPages = action.payload;
         })
     })
 })
@@ -67,7 +57,7 @@ export const selectCachedItems = (state: RootState, params: FetchParams) => {
     } catch (e) {
         console.log(e);
     }
-    return undefined;
+    return [];
 }
 
 export const selectCachedIds = (state: RootState, params: FilterParams) => {
@@ -77,17 +67,9 @@ export const selectCachedIds = (state: RootState, params: FilterParams) => {
     } catch (e) {
         console.log(e);
     }
-    return undefined;
+    return [];
 }
 
-export const selectBrands = (state: RootState) => {
-    return state.cache.brands;
-}
-
-export const selectTotalPages = (state: RootState) => {
-    return state.cache.totalPages;
-}
-
-export const { setBrands, setCachedItems, setCachedIds, setPages } = cacheSlice.actions;
+export const { setCachedItems, setCachedIds } = cacheSlice.actions;
 
 export default cacheSlice.reducer;
