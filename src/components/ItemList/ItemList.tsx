@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react";
 import { ItemType } from "../../types";
 import Item from "../Item/Item";
 import styles from "./ItemList.module.scss";
-import getUniqueItems from "../../utils/getUniqueItems";
 
 interface IProps {
     items: ItemType[];
