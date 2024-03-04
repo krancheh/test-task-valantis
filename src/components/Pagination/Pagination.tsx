@@ -1,35 +1,40 @@
+import { useState } from "react";
+import { UpdateParams } from "../../pages/ItemsPage";
 import styles from "./Pagination.module.scss";
 
 interface IProps {
     currentPage: number;
     totalPages: number;
-    onPageChange: (pageNumber: number) => void;
+    updateFetchParams: (params: UpdateParams) => void;
 }
 
 const Pagination = (props: IProps) => {
-    const { currentPage, totalPages, onPageChange } = props;
+    const { currentPage, totalPages, updateFetchParams } = props;
 
     const toNextPage = () => {
         if (currentPage < totalPages) {
-            onPageChange(currentPage + 1)
+            const newOffset = currentPage + 1;
+            updateFetchParams({ offset: newOffset.toString() });
         }
     }
 
     const toLastPage = () => {
         if (currentPage < totalPages) {
-            onPageChange(totalPages - 1);
+            const newOffset = totalPages - 1;
+            updateFetchParams({ offset: newOffset.toString() });
         }
     }
 
     const toPreviosPage = () => {
         if (currentPage > 0) {
-            onPageChange(currentPage - 1)
+            const newOffset = currentPage - 1;
+            updateFetchParams({ offset: newOffset.toString() });
         }
     }
 
     const toFirstPage = () => {
         if (currentPage > 0) {
-            onPageChange(0);
+            updateFetchParams({ offset: "0" });
         }
     }
 
