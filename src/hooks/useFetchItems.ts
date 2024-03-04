@@ -1,5 +1,5 @@
 import { FilterParams, RequestBody, ResponseData } from './../types.d';
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react';
 import { ItemType, FetchParams } from '../types';
 import $api from '../api';
 import getUniqueItems from '../utils/getUniqueItems';
@@ -11,10 +11,8 @@ interface IProps {
     fetchParams: FetchParams;
 }
 
-type UseFetchItems = [ItemType[], boolean, boolean];
 
-
-const useFetchItems = (props: IProps): UseFetchItems => {
+const useFetchItems = (props: IProps) => {
     const { fetchParams } = props;
 
     const items = useAppSelector(state => selectCachedItems(state, fetchParams));
@@ -28,9 +26,10 @@ const useFetchItems = (props: IProps): UseFetchItems => {
 
     useEffect(() => {
         let isMounted = true;
-        setIsFetching(true);
 
         const fetchItems = async () => {
+            setIsFetching(true);
+            setIsSuccess(false);
             try {
                 // если товары по таким параметрам есть в кэше, то новый запрос не делаем
                 if (items && items.length > 0) {
@@ -48,13 +47,21 @@ const useFetchItems = (props: IProps): UseFetchItems => {
 
                 let ids: string[];
 
-                // Запрос айдишников 
-                if (filter && cachedIdsByFilter && cachedIdsByFilter.length > 0) {
+                if (filter && cachedIdsByFilter) {
                     ids = cachedIdsByFilter.slice(offset * limit, offset * limit + limit - 1);
                 } else {
                     const idsResponse = await $api.post<ResponseData<string[]>>("/", getIdsBody);
                     dispatch(setCachedIds([filter, idsResponse.data.result]));
                     ids = filter ? idsResponse.data.result.slice(offset * limit, offset * limit + limit - 1) : idsResponse.data.result;
+                }
+
+                if (!ids.length) {
+                    setIsFetching(false);
+                    setIsSuccess(true);
+                    dispatch(setCachedItems([fetchParams, []]));
+                    console.log("no items");
+
+                    return;
                 }
 
                 const getItemsBody: RequestBody<{ ids: string[] }> = {
@@ -92,7 +99,7 @@ const useFetchItems = (props: IProps): UseFetchItems => {
         }
     }, [fetchParams]);
 
-    return [items, isSuccess, isFetching];
+    return { items, isSuccess, isFetching };
 }
 
 export default useFetchItems
