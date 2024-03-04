@@ -58,6 +58,16 @@ h1 {
     }
 }
 
+.input {
+    width: 100%;
+    max-width: 500px;
+    padding: 6px;
+
+    border-radius: $b-radius;
+    border: 1px solid #757575;
+    box-shadow: $shadow;
+}
+
 
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap')
