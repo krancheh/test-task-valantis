@@ -15,6 +15,11 @@
     border-radius: index.$b-radius;
 
 
+    @media screen and (max-width: 600px) {
+        width: 100%;
+    }
+
+
     .id {
         max-width: 100px;
 
