@@ -6,9 +6,9 @@ import HomePage from "./pages/HomePage";
 
 const App = () => {
     const router = createBrowserRouter(createRoutesFromElements(
-        <Route element={<Layout />}>
-            <Route path="test-task-valantis" element={<HomePage />} />
-            <Route path="test-task-valantis/items" element={<ItemsPage />} />
+        <Route path="test-task-valantis" element={<Layout />}>
+            <Route index element={<HomePage />} />
+            <Route path="items" element={<ItemsPage />} />
         </Route>
     ));
 
