@@ -1,5 +1,6 @@
 {
   "name": "test-task-valantis",
+  "homepage": "https://krancheh.github.io/test-task-valantis",
   "version": "1.0.0",
   "description": "Тестовое задание для компании Valantis",
   "main": "index.js",
