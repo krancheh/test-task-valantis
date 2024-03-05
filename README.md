@@ -1,2 +1,4 @@
-# test-task-valantis
-Тестовое задание для компании Valantis. Выполнил: Махонин Кирилл 
+# Тестовое задание для компании Valantis.
+Выполнил: **Махонин Кирилл**
+
+[Открыть в gh-pages](https://krancheh.github.io/test-task-valantis/)
