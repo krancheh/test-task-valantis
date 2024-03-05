@@ -54,7 +54,7 @@ export default (env: IEnv) => {
                     test: /\.tsx?$/,
                     use: "ts-loader",
                     exclude: /node_modules/,
-                }
+                },
             ]
         },
         resolve: {
