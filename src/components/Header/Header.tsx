@@ -20,12 +20,12 @@ const Header = () => {
 
                     <nav>
                         <NavLink to="/items" className={handleNavLinkClassname}>Каталог</NavLink>
-                        <NavLink to="/brands" className={handleNavLinkClassname}>Бренды</NavLink>
+                        {/* <NavLink to="/brands" className={handleNavLinkClassname}>Бренды</NavLink> */}
                     </nav>
 
                     <div className={styles.user}>
                         <p>Пользователь</p>
-                        <div className={styles.avatar} title="Аватар">A</div>
+                        <div className={styles.avatar} title="Аватар">П</div>
                     </div>
                 </div>
             </div>

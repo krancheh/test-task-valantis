@@ -14,7 +14,7 @@ const Item = (props: IProps) => {
             <span className={styles.id} title={item.id}>id: {item.id}</span>
             {
                 item.brand
-                    ? <p className={styles.brand} title={`Отфильтровать по ${item.brand}`}>{item.brand}</p>
+                    ? <p className={styles.brand}>{item.brand}</p>
                     : <p className={styles.noBrand}>Бренд не указан</p>
             }
             <h5 className={styles.product}>{item.product}</h5>

@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { UpdateParams } from "../../pages/ItemsPage";
+import { UpdateParams } from "../../pages/ItemsPage/ItemsPage";
 import styles from "./Pagination.module.scss";
 
 interface IProps {
@@ -11,41 +10,19 @@ interface IProps {
 const Pagination = (props: IProps) => {
     const { currentPage, totalPages, updateFetchParams } = props;
 
-    const toNextPage = () => {
-        if (currentPage < totalPages) {
-            const newOffset = currentPage + 1;
-            updateFetchParams({ offset: newOffset.toString() });
-        }
-    }
-
-    const toLastPage = () => {
-        if (currentPage < totalPages) {
-            const newOffset = totalPages - 1;
-            updateFetchParams({ offset: newOffset.toString() });
-        }
-    }
-
-    const toPreviosPage = () => {
-        if (currentPage > 0) {
-            const newOffset = currentPage - 1;
-            updateFetchParams({ offset: newOffset.toString() });
-        }
-    }
-
-    const toFirstPage = () => {
-        if (currentPage > 0) {
-            updateFetchParams({ offset: "0" });
-        }
+    const goToPage = (page: number) => {
+        const newOffset = Math.max(0, Math.min(page, totalPages - 1));
+        updateFetchParams({ offset: newOffset.toString() })
     }
 
     return (
         <div className={styles.pagination}>
             <nav className={styles.content}>
-                <button className={styles.pageButton} disabled={currentPage <= 0} onClick={toFirstPage}>{"<<"}</button>
-                <button className={styles.pageButton} disabled={currentPage <= 0} onClick={toPreviosPage}>{"<"}</button>
-                <button className={styles.pageButton}>{currentPage + 1}</button>
-                <button className={styles.pageButton} disabled={currentPage >= totalPages - 1} onClick={toNextPage}>{">"}</button>
-                <button className={styles.pageButton} disabled={currentPage >= totalPages - 1} onClick={toLastPage}>{">>"}</button>
+                <button title="На первую страницу" className={styles.pageButton} disabled={currentPage <= 0} onClick={() => goToPage(0)}>{"<<"}</button>
+                <button title="На предыдущую страницу" className={styles.pageButton} disabled={currentPage <= 0} onClick={() => goToPage(currentPage - 1)}>{"<"}</button>
+                <button title="Текущая страница" className={styles.pageButton}>{currentPage + 1}</button>
+                <button title="На следующую страницу" className={styles.pageButton} disabled={currentPage >= totalPages - 1} onClick={() => goToPage(currentPage + 1)}>{">"}</button>
+                <button title="На последнюю страницу" className={styles.pageButton} disabled={currentPage >= totalPages - 1} onClick={() => goToPage(totalPages - 1)}>{">>"}</button>
             </nav>
         </div>
     )

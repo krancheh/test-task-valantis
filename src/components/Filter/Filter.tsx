@@ -1,7 +1,6 @@
-import { FormEventHandler, useEffect, useRef, useState } from "react";
-import { Field, FilterParams, RequestBody, ResponseData } from "../../types";
+import { FormEventHandler, useState } from "react";
+import { FilterParams } from "../../types";
 import styles from "./Filter.module.scss";
-import $api from "../../api";
 import useFetchFields from "../../hooks/useFetchFields";
 
 

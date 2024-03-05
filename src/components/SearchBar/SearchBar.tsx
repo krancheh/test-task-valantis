@@ -17,10 +17,10 @@ const SearchBar = (props: IProps) => {
         const product = searchRef.current.value;
 
         if (product) {
-            setFilter({ product });
-        } else {
-            setFilter(null);
+            return setFilter({ product });
         }
+
+        return setFilter(null);
     }
 
     return (
