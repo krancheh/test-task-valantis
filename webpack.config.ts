@@ -11,7 +11,7 @@ interface IEnv {
 }
 
 export default (env: IEnv) => {
-    const $env = dotenv.config().parsed; // local .env
+    const $env = env.mode === "production" ? process.env : dotenv.config().parsed;
 
     const isDev = env.mode !== "production";
 
