@@ -1,5 +1,5 @@
 # Тестовое задание для компании Valantis.
-![image](https://github.com/krancheh/test-task-valantis/assets/114944229/fdb6619a-ef41-4cb7-bb39-119d6b5f1f94)
+![image](https://github.com/krancheh/test-task-valantis/assets/114944229/22f47c1b-cab1-4227-b6ff-d948eb09b31b)
 
 Выполнил: **Махонин Кирилл**
 
